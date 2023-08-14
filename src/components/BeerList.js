@@ -1,28 +1,36 @@
-import { StyleSheet, Text, View, FlatList, RefreshControl } from 'react-native'
+import { StyleSheet, View, FlatList, RefreshControl } from 'react-native'
 import React from 'react'
+//Components
 import BeerCard from './BeerCard'
+//Styles
+import { Text } from 'react-native-paper';
 
-const BeerList = ({ list, refreshing, onRefresh }) => {
+const BeerList = ({ list, refreshing, onRefresh, loadMoreItem }) => {
 
     const emptyList = () => {
-        return (<Text>Por el momento no hay productos disponibles</Text>)
+        return (<Text variant="bodyLarge" style={styles.text}>Por el momento no hay productos disponibles</Text>)
     };
 
-    const renderItem = ({ item }) => (
-        <View style={styles.item}>
-            <BeerCard item={item} />
-        </View>
-    );
+    const renderItem = ({ item, index }) => {
+        const lastIndex = index === list.length - 1
+        const lastItem = list.length % 2 !== 0 ? lastIndex : null
+        return (
+            <View key={index} style={[styles.item, { flex: lastItem ? (1 / 2) : 1, maxWidth: lastItem ? '45%' : '100%' }]}>
+                <BeerCard item={item} />
+            </View>
+        )
+    }
+
     return (
-        <View>
-            
+        <View style={{ flex: 1 }}>
             <FlatList
-            ListHeaderComponent={<Text>BeerList</Text>}
                 data={list}
-                keyExtractor={item => item.id}
+                keyExtractor={(x, i) => i}
+                renderItem={renderItem}
+                onEndReachedThreshold={0.0000000001}
+                onEndReached={loadMoreItem}
                 ItemSeparatorComponent={() => <Text> </Text>}
                 numColumns={2}
-                renderItem={renderItem}
                 ListEmptyComponent={emptyList}
                 contentContainerStyle={styles.container}
                 refreshControl={
@@ -40,14 +48,16 @@ export default BeerList
 
 const styles = StyleSheet.create({
     container: {
-        margin: 10
+        margin: 10,
+        paddingBottom: 40,
     },
     item: {
-        flex: 1,
         marginHorizontal: 11,
         marginVertical: 2,
-        padding: 10,
-        borderWidth: 1,
-        borderColor: '#ccc',
+    },
+    text: {
+        color: "#8d99ae",
+        textAlign: "center",
+        marginVertical: 34
     },
 })

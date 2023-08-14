@@ -19,7 +19,6 @@ const TabBarIcon = (props) => {
                             <Text style={styles.text}>Home</Text>
                         </>
                     )}
-
                 </View>
             ) : props.screen === 'About' ? (
                 <View style={styles.container}>
@@ -35,8 +34,23 @@ const TabBarIcon = (props) => {
                         </>
                     )}
                 </View>
-            ) :
-                null}
+            )
+                : props.screen === 'Cart' ? (
+                    <View style={styles.container}>
+                        {props.focused ? (
+                            <>
+                                <Ionicons name={'cart'} size={22} color={"#780000"}></Ionicons>
+                                <Text style={styles.activeTtext}>Cart</Text>
+                            </>
+                        ) : (
+                            <>
+                                <Ionicons name={'cart-outline'} size={22} color={"#780000"}></Ionicons>
+                                <Text style={styles.text}>Cart</Text>
+                            </>
+                        )}
+                    </View>
+                ) :
+                    null}
         </>
     );
 };

@@ -1,12 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 import React from 'react'
 //Navigation
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 //Components
-import Main from '../screens/Main';
 import TabBarIcon from '../components/TabBarIcon';
+import Cart from '../screens/Cart';
+import About from '../screens/About';
+import Home from '../screens/Home';
 //UI
 
 const Tab = createBottomTabNavigator();
@@ -24,15 +26,23 @@ const TabNavigator = () => {
         >
             <Tab.Screen
                 name="MainApp"
-                component={Main}
+                component={Home}
                 options={{
                     tabBarIcon: ({ focused }) =>
                         TabBarIcon({ focused, screen: 'Home' }),
                 }}
             />
             <Tab.Screen
+                name="Cart"
+                component={Cart}
+                options={{
+                    tabBarIcon: ({ focused }) =>
+                        TabBarIcon({ focused, screen: "Cart" }),
+                }}
+            />
+            <Tab.Screen
                 name="About"
-                component={Main}
+                component={About}
                 options={{
                     tabBarIcon: ({ focused }) =>
                         TabBarIcon({ focused, screen: "About" }),
